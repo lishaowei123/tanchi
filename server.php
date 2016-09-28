@@ -62,7 +62,7 @@ $server->set(array(
 $server->on('open', function ($server, $request) {
         //插入数据库
         db($request->fd);
-        //$m = file_get_contents( __DIR__ .'/log.txt');
+        $m = file_get_contents( __DIR__ .'/log.txt');
         $retunr=array(
             'code'=>'0',
             'message'=> $request->fd.'--欢迎进入贪吃蛇大作战'
