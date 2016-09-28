@@ -78,9 +78,12 @@ $server->on('open', function ($server, $request) {
             'code'=>'4002',
             'message'=>$userinfo['name'].'--进入房间'
         ));
+    foreach($_SESSION["users"] as $i){
+        $server->push($i, $requestFd );
+    }
         for ($i=1 ; $i<= $m ; $i++)
         {
-            $server->push($i, $requestFd );
+
         }
     $_SESSION["users"][$request->fd] = $userinfo;
     echo count($_SESSION['users'])."\n";
