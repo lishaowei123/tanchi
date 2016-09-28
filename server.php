@@ -82,8 +82,8 @@ $server->on('open', function ($server, $request) {
         {
             $server->push($i, $requestFd );
         }
-        echo count($_SESSION['users'])."\n";
-        $_SESSION["users"][$request->fd] = $userinfo;
+    $_SESSION["users"][$request->fd] = $userinfo;
+    echo count($_SESSION['users'])."\n";
         file_put_contents( __DIR__ .'/log.txt' , $request->fd);
 });
 
