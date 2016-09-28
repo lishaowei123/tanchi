@@ -52,8 +52,8 @@ header("Content-Type: text/html; charset=UTF-8");
 $server = new swoole_websocket_server("0.0.0.0", 9502);
 session_start();
 $server->set(array(
-    'worker_num'  => 14,
-    'daemonize'   => 1, //是否作为守护进程,此配置一般配合log_file使用
+    //'worker_num'  => 14,
+    //'daemonize'   => 1, //是否作为守护进程,此配置一般配合log_file使用
 //    'max_request' => 1000,
 //    'log_file'    => './swoole.log',
 //    'task_worker_num' => 8
