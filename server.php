@@ -78,6 +78,7 @@ $server->on('open', function ($server, $request) {
             'code'=>'4002',
             'message'=>$userinfo['name'].'--进入房间'
         ));
+    var_dump($_SESSION['users']);
     foreach($_SESSION["users"] as $k=>$i){
         $server->push($i, $requestFd );
     }
