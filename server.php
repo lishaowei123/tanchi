@@ -96,8 +96,10 @@ $server->on('message', function ($server, $frame) {
 //            $data=explode(',',$frame->data);
             $data=explode(',',$frame->data);
             $array=json_decode($frame->data,true);
-
-            for ($i=1 ; $i<= $m ; $i++) {
+//    foreach(){
+//        $server->push($i, $requestFd );
+//    }
+    foreach ($_SESSION["users"] as $i) {
                 if($array['code']==200){
                     $requestArray=json_encode(array(
                         'code'=>'4007',
@@ -126,7 +128,7 @@ $server->on('close', function ($server, $fd) {
         'code'=>'4003',
         'message'=>$_SESSION['users'][$fd]['name'].'---退出房间'
     ));
-    for ($i=1 ; $i<= $m ; $i++) {
+    foreach ($_SESSION["users"] as $i) {
         $server->push($i,  $requestFd );
     }
     var_dump($requestFd);
