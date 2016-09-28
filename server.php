@@ -43,14 +43,7 @@ function dbAll()
     define('DB_HOST','23.83.226.12');
     define('DB_TYPE','mysql');
     $dbh = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWD);
-
-    $ip=uniqid('asdasd');
-
-    $time=time();
     $sql="select *from user";
-
-//echo $sql;
-
     return $dbh->query($sql) ;
 }
 
