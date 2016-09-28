@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    table{
+        margin: auto;
+        width: 600px;
+        height: 600px;
+        border-collapse: collapse;
+    }
+    td{
+        border: 1px solid red;
+    }
+    .black{
+        /*//background: green;*/
+
+        /*display: block;*/
+        background-size: 30px 30px;
+        background-image: url(0.jpg);
+    }
+    .red{
+        background-size: 30px 30px;
+        background-color: red;
+        /*background-image: url(1.jpg);*/
+    }
+    .r{
+        background-size: 30px 30px;
+        /*background-image: url(10.jpg);*/
+        background-color: black;
+        border-radius: 40px;
+    }
+    #fen{
+        position: absolute;
+        float: left;
+        margin-left: 200px;
+    }
+</style>
+<body>
+<div id='fen'><p><h1>贪吃se</h1></p>
+    <p><h2>分数</h2><h3>0</h3></p></div>
+<table>
+
+</table>
+
+</body>
+<script type="text/javascript" src='http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'></script>
+<script type="text/javascript">
+    // var r=[8,7,6,5,4,3,2,1];
+    //动态创建20个td
+    function td(){
+        for(var i=0,html='';i<20;i++){
+            html=html+'<td></td>';
+        }
+        return html;
+    }
+    //动态创建20个tr并把20td塞入
+    function table(){
+        for(var i=0;i<20;i++){
+            $('table:eq(0)').append('<tr></tr>');
+            $('tr:eq('+i+')').append("'"+td()+"'");
+        }
+
+    }
+    //console.log(td());
+
+    var r=[1];
+    function sui(){
+        var b=Math.floor(Math.random()*99);
+        console.log($.inArray(b,r));
+        if($.inArray(b,r)>=0){
+            sui();
+            // alert('dd');
+        }
+        $('td:eq('+b+')').addClass('black');
+    }
+
+
+    function t1(n){
+        a=r[0]-n; //新走的步数
+        if(a<0){
+            bai();
+        }
+        r.unshift(a);//塞数组
+        r.pop();//删除最后一个
+        return r;
+    }
+    function t2(n){
+        a=r[0]+n;
+        if(a>400){
+            bai();
+        }
+        r.unshift(a);
+        r.pop();
+        return r;
+    }
+    //失败
+    function bai(){
+        prompt('失败了','sorry');
+        clearInterval(aa);
+    }
+    //封装判断吃到东西没有
+    function pan(){
+        var aa=$($('td').get(r[0])).attr("Class");
+        //console.log(aa);
+        if(aa==='black'){
+            //alert('你吃到东西了');
+            $($('td').get(r[0])).removeClass();
+            r.push('p');
+            sui();
+            f();//加分
+        }else{
+            // alert('失败');
+        }
+    }
+
+
+    var an=null;//获取按键值
+    var aa=null;//自动走
+    var time=100;//时间
+    var fen=0;
+    function f(){
+        fen=$('h3:eq(0)').html();
+        fen++;
+        $('h3:eq(0)').text(fen);
+    }
+    function yu(){
+
+        $('body').keydown(function(ev){
+            an=ev.which;
+
+
+            tt(an);
+            if(an==39){
+                clearInterval(aa);
+                aa=setInterval('tt('+an+')',time);
+
+            }else if(an==37){
+                clearInterval(aa);
+                aa=setInterval('tt('+an+')',time);
+            }else if(an==38){
+                clearInterval(aa);
+                aa=setInterval('tt('+an+')',time);
+            }else if(an==40){
+                clearInterval(aa);
+                aa=setInterval('tt('+an+')',time);
+            }
+        });
+
+    }
+
+    //执行
+    function tt(an){
+        for(var i=0;i<r.length;i++){
+
+            $('td:eq('+r[i]+')').removeClass();
+        }
+        console.log(an);
+        if(an==37){
+            t1(1);
+            pan();
+
+        }else if(an==39){
+
+            t2(1);
+            pan();
+
+        }else if(an==38){
+
+            t1(20);
+            pan();
+        }else if(an==40){
+
+            t2(20);
+            pan();
+
+        }
+
+        for(var i=0;i<r.length;i++){
+            if (i==0) {
+                $('td:eq('+r[i]+')').addClass('r');
+            }else{
+
+                $('td:eq('+r[i]+')').addClass('red');
+            }
+        }
+    }
+
+    //初始化文件
+
+    //顺序不要变
+    function init(){
+        table(); //初始化创建表格
+        sui();//随机食物
+
+        yu(); //获取按键
+
+    }
+
+    init();
+
+
+</script>
+</html>

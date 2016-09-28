@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src='http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js'></script>
+    <script type="text/javascript">
+        var exampleSocket = new WebSocket("ws://ws.yizhibo.com/yizhibo/?EIO=3&transport=websocket");
+         exampleSocket.onopen = function (event) {
+             exampleSocket.send('42["joinRoom","_z7vAerE5QaZDSYA"]');
+             exampleSocket.send('42["joinRoom","JMFUNZOkRpcX1aCv"]');
+             exampleSocket.send('42["joinRoom","yr-JX7HcC_qBw-g-"]');
+         };
+        var data;
+        var message;
+        var dataArray;
+        var id;
+        exampleSocket.onmessage = function (event) {
+            var html = document.getElementById("sendContent").innerHTML;
+
+
+
+            //解析数据
+            data=event.data;
+
+            id=data.substring(0,2);
+            dataArray=data.substring(2,data.length);//大数据
+//            console.info(id);
+//            console.info(dataArray);
+            var parsedJson = jQuery.parseJSON(dataArray);
+            var parsedJsonData = jQuery.parseJSON(parsedJson[1]);
+
+            console.info(parsedJson[0]);
+            console.info(parsedJsonData);
+            var html2;
+            switch (parsedJson[0])
+            {
+                case 'comment':
+                    html2="<div style='font-size: 10px;float: left;height: 50px;width:600px;display: block'><img style='color: blue;float: left' height='50px' width='50px' src='"+parsedJsonData.avatar+"' alt=''>"
+                            +"<h1 style='color: blue;float: left'>"+parsedJsonData.nickname+":</h1>"
+                            +"<font style='color: red;float: left'>"+parsedJsonData.content+"</font></div>";
+
+                    document.getElementById("sendContent").innerHTML= html + html2+"<br>";
+                    $("#sendContent").scrollTop(1000000);
+                    break;
+                case 'login':
+                    var  parsedJson2 = parsedJsonData[0];
+
+                    html2="<div style='font-size: 10px;float: left;height: 50px;width:600px;display: block'>" +
+                            "<img style='color: blue;float: left' height='50px' width='50px' " +
+                            "src='"+parsedJson2.avatar+"' alt=''>"
+                            +"<h1 style='color: blue;float: left'>"+parsedJson2.nickname+":进入游戏</h1>"
+                    ;
+                    document.getElementById("sendContent").innerHTML= html + html2+"<br>";
+                    $("#sendContent").scrollTop(1000000);
+                    break;
+            }
+
+
+
+//            $.each(dataArray.comment, function(i, item) {
+//                $("#sendContent").append(
+//                        "<div>" + item.createtime + "</div>" +
+//                        "<div>" + item.nickname    + "</div>" +
+//                        "<div>" + item.content + "</div><hr/>");
+//            });
+
+        }
+
+    </script>
+</head>
+<style>
+    #sendContent{
+        position: absolute;
+        float: left;
+        height: 500px;
+        width: 600px;
+        border-right: 1px solid brown;
+        color: red;
+        overflow:auto;
+        z-index: 1000;
+    }
+    #p{
+        position: absolute;
+        margin-left: 600px;
+    }
+</style>
+<body>
+
+
+<div id="sendContent">
+
+</div>
+
+<p id='p'>
+    <input  type="text" id="content">
+    <button  onclick="exampleSocket.send( document.getElementById('content').value )">发送</button>
+</p>
+
+</body>
+</html>
