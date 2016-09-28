@@ -34,6 +34,27 @@ function db($fq)
     $dbh->query($sql) ;
 }
 
+function dbAll()
+{
+
+    define('DB_NAME','record');
+    define('DB_USER','root');
+    define('DB_PASSWD','980167048');
+    define('DB_HOST','23.83.226.12');
+    define('DB_TYPE','mysql');
+    $dbh = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWD);
+
+    $ip=uniqid('asdasd');
+
+    $time=time();
+    $sql="select *from user";
+
+//echo $sql;
+
+    return $dbh->query($sql) ;
+}
+
+
 header("Content-Type: text/html; charset=UTF-8");
 $server = new swoole_websocket_server("0.0.0.0", 9502);
 session_start();
@@ -46,9 +67,9 @@ $server->set(array(
 ));
 
 $server->on('open', function ($server, $request) {
-    //插入数据库
+        //插入数据库
         db($request->fd);
-        $m = file_get_contents( __DIR__ .'/log.txt');
+        //$m = file_get_contents( __DIR__ .'/log.txt');
         $retunr=array(
             'code'=>'0',
             'message'=> $request->fd.'--欢迎进入贪吃蛇大作战'
