@@ -81,10 +81,10 @@ $server->on('open', function ($server, $request) {
     foreach($_SESSION["users"] as $i){
         $server->push($i, $requestFd );
     }
-        for ($i=1 ; $i<= $m ; $i++)
-        {
-
-        }
+//        for ($i=1 ; $i<= $m ; $i++)
+//        {
+//
+//        }
     $_SESSION["users"][$request->fd] = $userinfo;
     echo count($_SESSION['users'])."\n";
         file_put_contents( __DIR__ .'/log.txt' , $request->fd);
