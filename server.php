@@ -14,7 +14,7 @@ function get_client_ip(){
     return($ip);
 }
 
-function db()
+function db($fq)
 {
 
     define('DB_NAME','record');
@@ -27,13 +27,13 @@ function db()
     $ip=uniqid('asdasd');
 
     $time=time();
-    $sql="insert into record  (ip,create_time) values ('$ip',$time)";
+    $sql="insert into user  (fq,uid,create_time) values ($fq,'$ip',$time)";
 
 //echo $sql;
 
     $dbh->query($sql) ;
 }
-db();
+
 header("Content-Type: text/html; charset=UTF-8");
 $server = new swoole_websocket_server("0.0.0.0", 9502);
 session_start();
@@ -46,7 +46,8 @@ $server->set(array(
 ));
 
 $server->on('open', function ($server, $request) {
-
+    //插入数据库
+        db($request->fd);
         $m = file_get_contents( __DIR__ .'/log.txt');
         $retunr=array(
             'code'=>'0',
