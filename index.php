@@ -1,38 +1,38 @@
 <?php
-//function get_client_ip(){
-//if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
-//$ip = getenv("HTTP_CLIENT_IP");
-//else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
-//$ip = getenv("HTTP_X_FORWARDED_FOR");
-//else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
-//$ip = getenv("REMOTE_ADDR");
-//else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
-//$ip = $_SERVER['REMOTE_ADDR'];
-//else
-//$ip = "unknown";
-//return($ip);
-//}
-//
-//function db()
-//{
-//
-//    define('DB_NAME','record');
-//    define('DB_USER','root');
-//    define('DB_PASSWD','980167048');
-//    define('DB_HOST','23.83.226.12');
-//    define('DB_TYPE','mysql');
-//    $dbh = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWD);
-//
-//$ip=get_client_ip();
-//
-//$time=time();
-//$sql="insert into record  (ip,create_time) values ('$ip',$time)";
-//
-////echo $sql;
-//
-// $dbh->query($sql) ;
-//}
-//db();
+function get_client_ip(){
+if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+$ip = getenv("HTTP_CLIENT_IP");
+else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+$ip = getenv("HTTP_X_FORWARDED_FOR");
+else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+$ip = getenv("REMOTE_ADDR");
+else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+$ip = $_SERVER['REMOTE_ADDR'];
+else
+$ip = "unknown";
+return($ip);
+}
+
+function db()
+{
+
+    define('DB_NAME','record');
+    define('DB_USER','root');
+    define('DB_PASSWD','980167048');
+    define('DB_HOST','23.83.226.12');
+    define('DB_TYPE','mysql');
+    $dbh = new PDO(DB_TYPE.':host='.DB_HOST.';dbname='.DB_NAME, DB_USER, DB_PASSWD);
+
+$ip=get_client_ip();
+
+$time=time();
+$sql="insert into record  (ip,create_time) values ('$ip',$time)";
+
+//echo $sql;
+
+ $dbh->query($sql) ;
+}
+db();
 //?>
 
 <!--table表格样式-->
